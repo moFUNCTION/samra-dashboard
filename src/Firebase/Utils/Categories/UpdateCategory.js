@@ -10,12 +10,22 @@ import { getCategory } from "./getCategory";
 import { arraysEqual } from "../../lib/arraysEqual";
 import { UploadFiles } from "../../lib/UploadFiles";
 export class UpdateCategory {
-  #collection = "Events";
-  constructor({ title, description, images, onUploadProgress }) {
+  #collection = "Categories";
+  constructor({
+    title,
+    description,
+    availabilityType,
+    images,
+    onUploadProgress,
+    categoryId,
+  }) {
     this.title = title;
     this.description = description;
     this.images = images;
     this.onUploadProgress = onUploadProgress;
+    this.categoryId = categoryId;
+    this.searchKey = title.toUpperCase();
+    this.availabilityType = availabilityType;
   }
   async #UpdateImages({ prevImages }) {
     let newImages = [];

@@ -43,15 +43,7 @@ export const useAuth = () => {
     });
   };
   useEffect(() => {
-    if (!auth.currentUser) {
-      const unSubscribe = onAuthStateChanged(auth, GetUserData, HandleError);
-      return () => {
-        unSubscribe();
-        HandleError();
-      };
-    } else {
-      GetUserData(auth.currentUser);
-    }
+    onAuthStateChanged(auth, GetUserData, HandleError);
   }, [user.render]);
   return { user, HandleRender };
 };

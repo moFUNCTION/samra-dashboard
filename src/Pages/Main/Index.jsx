@@ -1,12 +1,15 @@
-import { Flex, Stack } from "@chakra-ui/react";
+import { Flex, Stack, useMediaQuery } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import { TabsMenu } from "../../Components/Layout/TabssMenu/TabsMenu";
 import { Header } from "../../Components/Layout/Header/Header";
 import { UseUserData } from "../../Context/UserDataProvider/UserDataProvider";
 import { CenteredCircularProgress } from "../../Components/Common/CenteredCircularProgress/CenteredCircularProgress";
+import { MobileTabsNavigation } from "../../Components/Layout/MobileTabsNavigation/MobileTabsNavigation";
 
 export default function Index() {
+  const [isPhoneQuery] = useMediaQuery("(max-width: 900px)");
+
   const { user, HandleRender } = UseUserData();
   if (user.loading) {
     return <CenteredCircularProgress />;
@@ -24,8 +27,11 @@ export default function Index() {
       }}
       h="100vh"
       w="100%"
+      pos="relative"
+      flexDir={isPhoneQuery ? "column-reverse" : "row"}
     >
-      <TabsMenu />
+      {isPhoneQuery ? <MobileTabsNavigation /> : <TabsMenu />}
+
       <Stack
         w="100%"
         gap="0"

@@ -51,7 +51,7 @@ const tabsLinks = [
     title: "مبيعات هذا الصنف",
   },
   {
-    href: "update",
+    href: "updateCategory",
     title: "تعديل الصنف",
   },
 ];

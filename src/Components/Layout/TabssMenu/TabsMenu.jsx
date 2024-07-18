@@ -46,30 +46,10 @@ export const TabsMenu = () => {
     setExpnad(!expand);
   };
   // }
-  const { isOpen, onClose, onOpen } = useDisclosure();
-  const [isPhoneQuery] = useMediaQuery("(max-width: 800px)");
+
   return (
     <>
-      {!isOpen && isPhoneQuery && (
-        <IconButton
-          colorScheme="blue"
-          pos="fixed"
-          top="1"
-          right="1"
-          zIndex="10000"
-          onClick={onOpen}
-        >
-          <BsArrowLeft />
-        </IconButton>
-      )}
-
-      <Stack
-        w={isPhoneQuery && (isOpen ? "fit-content" : "0px")}
-        flexShrink="0"
-        bgColor="gray.100"
-        h="100%"
-        alignItems="center"
-      >
+      <Stack flexShrink="0" bgColor="gray.100" h="100%" alignItems="center">
         <Box
           display="flex"
           justifyContent="center"
@@ -123,16 +103,6 @@ export const TabsMenu = () => {
             );
           })}
         </Tabs>
-        {isOpen && isPhoneQuery && (
-          <IconButton
-            flexShrink="0"
-            mb="2"
-            colorScheme="blue"
-            onClick={onClose}
-          >
-            <BsArrowRight />
-          </IconButton>
-        )}
       </Stack>
     </>
   );

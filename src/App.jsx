@@ -38,6 +38,10 @@ const UpdateProduct = lazy(() =>
 const Events = lazy(() => import("./Pages/Main/Events/EventsLanding/Index"));
 const EventsAdd = lazy(() => import("./Pages/Main/Events/AddEvent/Index"));
 const EventUpdate = lazy(() => import("./Pages/Main/Events/UpdateEvent/Index"));
+// ?? Orders
+const PendingOrders = lazy(() =>
+  import("./Pages/Main/Orders/PendingOrders/Index")
+);
 function App() {
   return (
     <>
@@ -175,6 +179,10 @@ function App() {
               <Route index element={<Events />} />
               <Route path="add" element={<EventsAdd />} />
               <Route path="update/:id" element={<EventUpdate />} />
+            </Route>
+            <Route path="/orders">
+              <Route index element={<PendingOrders />} />
+              <Route path="pending" element={<PendingOrders />} />
             </Route>
           </Route>
         </Routes>

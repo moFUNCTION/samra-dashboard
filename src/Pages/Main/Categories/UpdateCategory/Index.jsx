@@ -67,6 +67,7 @@ export default function Index() {
     try {
       onOpenProgressModal();
       const category_init = new Category({ ...data, images: fields });
+
       const addCategoryReq = await category_init.update({
         id: categoryId,
         onUploadProgress: ({ progress, state }) => {
@@ -75,7 +76,7 @@ export default function Index() {
       });
       toast({
         status: "success",
-        title: "تم اضافة الصنف بنجاح يزعيم",
+        title: "تم تحديث الصنف بنجاح يزعيم",
       });
       Navigate("/categories");
       onCloseProgressModal();
@@ -85,6 +86,7 @@ export default function Index() {
         title: "حدث خطأ الرجاء التحدث مع الدعم",
         description: err.message,
       });
+      console.log(err);
     }
   };
   return (
