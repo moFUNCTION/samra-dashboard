@@ -10,7 +10,13 @@ import {
   startAfter,
   where,
 } from "firebase/firestore";
-import React, { useEffect, useReducer, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useReducer,
+  useState,
+  useTransition,
+} from "react";
 import { db } from "../../../Config/Config";
 import {
   GetDataPaginatedReducer,
@@ -27,7 +33,7 @@ export const useGetOrders = ({ size, status = "pending" }) => {
       limit(size)
     )
   );
-  const HandleGetOrders = async () => {
+  const HandleGetOrders = useCallback(async () => {
     dispach({
       type: "FETCH_START",
     });
@@ -46,11 +52,11 @@ export const useGetOrders = ({ size, status = "pending" }) => {
         });
       }
     );
-  };
+  }, [queryRef]);
 
   useEffect(() => {
     HandleGetOrders();
-  }, [queryRef]);
+  }, [HandleGetOrders]);
   useEffect(() => {
     setQueryRef(
       query(
@@ -64,7 +70,7 @@ export const useGetOrders = ({ size, status = "pending" }) => {
       type: "PAGE_RESET",
     });
   }, []);
-  const HandleGetNextPage = () => {
+  const HandleGetNextPage = useCallback(() => {
     setQueryRef(
       query(
         OrdersCollection,
@@ -77,8 +83,8 @@ export const useGetOrders = ({ size, status = "pending" }) => {
     dispach({
       type: "NEXT_PAGE",
     });
-  };
-  const HandleGetPreviousPage = () => {
+  }, [JSON.stringify(Orders.data), size, status]);
+  const HandleGetPreviousPage = useCallback(() => {
     setQueryRef(
       query(
         OrdersCollection,
@@ -91,7 +97,21 @@ export const useGetOrders = ({ size, status = "pending" }) => {
     dispach({
       type: "PREVIOUS_PAGE",
     });
-  };
+  }, [JSON.stringify(Orders.data), size, status]);
+
+  const HandleReset = useCallback(() => {
+    setQueryRef(
+      query(
+        OrdersCollection,
+        orderBy("createdAt", "desc"),
+        where("status", "==", status),
+        limit(size)
+      )
+    );
+    dispach({
+      type: "PAGE_RESET",
+    });
+  }, []);
   return {
     data: Orders.data.map((doc) => {
       return { ...doc.data(), id: doc.id };
@@ -101,5 +121,6 @@ export const useGetOrders = ({ size, status = "pending" }) => {
     HandleGetNextPage,
     HandleGetPreviousPage,
     page: Orders.page,
+    HandleReset,
   };
 };

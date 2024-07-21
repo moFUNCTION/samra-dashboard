@@ -23,9 +23,9 @@ export const SearchField = ({
   variant,
   children,
   TooltipLabel,
-  ShortCuts,
   BtnStyles,
   ShowModalAsCenterd,
+  Icon = <BsSearch />,
   ...rest
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -55,7 +55,7 @@ export const SearchField = ({
       {variant === "Bar" && (
         <Tooltip label={TooltipLabel}>
           <Button
-            leftIcon={<BsSearch />}
+            leftIcon={Icon}
             variant="outline"
             borderRadius="lg"
             onClick={onOpen}
@@ -72,7 +72,7 @@ export const SearchField = ({
       {variant === "IconButton" && (
         <Tooltip label={TooltipLabel}>
           <IconButton onClick={onOpen} {...BtnStyles}>
-            <BsSearch />
+            {Icon}
           </IconButton>
         </Tooltip>
       )}

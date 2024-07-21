@@ -42,6 +42,12 @@ const EventUpdate = lazy(() => import("./Pages/Main/Events/UpdateEvent/Index"));
 const PendingOrders = lazy(() =>
   import("./Pages/Main/Orders/PendingOrders/Index")
 );
+const ProcessingOrders = lazy(() =>
+  import("./Pages/Main/Orders/InDeliveryOrders/Index")
+);
+const CompletedOrders = lazy(() =>
+  import("./Pages/Main/Orders/CompletedOrders/Index")
+);
 function App() {
   return (
     <>
@@ -169,20 +175,83 @@ function App() {
               }
             >
               <Route path="comments" />
-              <Route path="updateProduct" element={<UpdateProduct />} />
+              <Route
+                path="updateProduct"
+                element={
+                  <LazyPageWrapper>
+                    <UpdateProduct />
+                  </LazyPageWrapper>
+                }
+              />
             </Route>
             <Route
               path="/categories/:categoryId/products/updateProduct/:productId"
-              element={<UpdateProduct />}
+              element={
+                <LazyPageWrapper>
+                  <UpdateProduct />
+                </LazyPageWrapper>
+              }
             />
+
             <Route path="/events">
-              <Route index element={<Events />} />
-              <Route path="add" element={<EventsAdd />} />
-              <Route path="update/:id" element={<EventUpdate />} />
+              <Route
+                index
+                element={
+                  <LazyPageWrapper>
+                    <Events />
+                  </LazyPageWrapper>
+                }
+              />
+              <Route
+                path="add"
+                element={
+                  <LazyPageWrapper>
+                    <EventsAdd />
+                  </LazyPageWrapper>
+                }
+              />
+              <Route
+                path="update/:id"
+                element={
+                  <LazyPageWrapper>
+                    <EventUpdate />
+                  </LazyPageWrapper>
+                }
+              />
             </Route>
             <Route path="/orders">
-              <Route index element={<PendingOrders />} />
-              <Route path="pending" element={<PendingOrders />} />
+              <Route
+                index
+                element={
+                  <LazyPageWrapper>
+                    <PendingOrders />
+                  </LazyPageWrapper>
+                }
+              />
+              <Route
+                path="pending"
+                element={
+                  <LazyPageWrapper>
+                    <PendingOrders />
+                  </LazyPageWrapper>
+                }
+              />
+              <Route
+                path="progress"
+                element={
+                  <LazyPageWrapper>
+                    <ProcessingOrders />
+                  </LazyPageWrapper>
+                }
+              />
+              <Route
+                path="completed"
+                element={
+                  <LazyPageWrapper>
+                    <CompletedOrders />
+                  </LazyPageWrapper>
+                }
+              />
             </Route>
           </Route>
         </Routes>

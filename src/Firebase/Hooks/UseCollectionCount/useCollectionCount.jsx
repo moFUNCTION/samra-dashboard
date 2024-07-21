@@ -43,8 +43,11 @@ export const useCollectionCount = ({ collectionName, GetQuery }) => {
       });
     }
   };
+  const onRender = () => {
+    GetCollectionData();
+  };
   useEffect(() => {
     GetCollectionData();
   }, [GetQuery]);
-  return collectionData;
+  return { ...collectionData, onRender };
 };

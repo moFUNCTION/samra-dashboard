@@ -23,7 +23,7 @@ export default function Index() {
     onRender,
   } = useCollectionCount({
     collectionName: "Orders",
-    GetQuery: `status == pending`,
+    GetQuery: `status == processing`,
   });
   const pagesNumber = Math.ceil(count / 3);
   const {
@@ -34,25 +34,21 @@ export default function Index() {
     HandleGetNextPage,
     HandleGetPreviousPage,
     HandleReset,
-  } = useGetOrders({ size: 3, status: "pending" });
-  const container = useRef();
+  } = useGetOrders({ size: 3, status: "processing" });
   const [scrollTop] = useOutletContext();
   useEffect(() => {
     scrollTop();
   }, [page]);
   useEffect(() => {
-    if (data) {
-      onRender();
-    }
+    onRender();
   }, [JSON.stringify(data)]);
   const onResetPage = () => {
     if (count - page * 3) {
       HandleReset();
     }
   };
-
   return (
-    <Stack ref={container} p="2">
+    <Stack p="2">
       <Flex
         bgColor="gray.50"
         justifyContent="space-between"
@@ -69,7 +65,7 @@ export default function Index() {
         <Heading size="md">اهلا بك في صفحة الاوردرات المعلقة</Heading>
         <Flex gap="3" flexWrap="wrap">
           <Button isLoading={countLoading} flexGrow="1" colorScheme="blue">
-            عدد الاوردرات المعلقة : {count}
+            عدد الاوردرات التي يتم تنفيذها : {count}
           </Button>
         </Flex>
       </Flex>
@@ -86,7 +82,7 @@ export default function Index() {
         fadeDuration={1}
         alignItems="center"
       >
-        {data.length === 0 && !loading && (
+        {data?.length === 0 && !loading && (
           <>
             <Lottie
               style={{
@@ -96,7 +92,7 @@ export default function Index() {
               animationData={AnimationData}
             />
             <Heading size="md" textAlign="center">
-              لا يوجد اوردرات معلقة
+              لا يوجد اوردرات يتم تحضيرها
             </Heading>
           </>
         )}
@@ -104,7 +100,7 @@ export default function Index() {
           return (
             <React.Fragment key={order.id}>
               <OrderBox
-                UpdateToStatus="processing"
+                UpdateToStatus="completed"
                 onReset={onResetPage}
                 {...order}
               />

@@ -2,6 +2,7 @@ import { Box, Button, Divider, Flex, Heading, Stack } from "@chakra-ui/react";
 import React from "react";
 import { LazyLoadedImage } from "../LazyLoadedImage/LazyLoadedImage";
 import { TranslateSize } from "../../../Utils/TranslateSize/TranslateSize";
+import { Link } from "react-router-dom";
 
 export const ProductOrderedBox = ({
   images,
@@ -11,10 +12,13 @@ export const ProductOrderedBox = ({
   providedText,
   time,
   sizesRequested,
+  id,
+  categoryId,
 }) => {
   return (
     <Flex
       justifyContent="space-between"
+      alignItems="stretch"
       p="2"
       bgColor="white"
       borderRadius="lg"
@@ -40,18 +44,23 @@ export const ProductOrderedBox = ({
           </Heading>
           <Heading size="sm">النص المرفق : {providedText}</Heading>
           <Heading size="sm">وقت التحضير: {time}</Heading>
-          <Button colorScheme="blue">التوجه للمنتج</Button>
+          <Button
+            as={Link}
+            to={`/categories/${categoryId}/products/${id}`}
+            colorScheme="blue"
+          >
+            التوجه للمنتج
+          </Button>
         </Stack>
       </Flex>
       <Stack
         gap="2"
-        w="100%"
-        maxW="500px"
+        flexGrow="1"
+        maxW="700px"
         bgColor="gray.100"
         borderRadius="lg"
         p="2"
         wrap="wrap"
-        h="fit-content"
       >
         <Heading
           w="100%"
@@ -64,41 +73,39 @@ export const ProductOrderedBox = ({
         </Heading>
         {sizesRequested.map((sizeRequisted) => {
           return (
-            <>
-              <Flex
-                p="2"
-                bgColor="gray.300"
+            <Flex
+              p="2"
+              bgColor="gray.300"
+              flexGrow="1"
+              key={sizeRequisted.id}
+              gap="3"
+              flexWrap="wrap"
+            >
+              <Button
                 flexGrow="1"
-                key={sizeRequisted.id}
-                gap="3"
-                flexWrap="wrap"
+                colorScheme="blue"
+                variant="outline"
+                bgColor="white"
               >
-                <Button
-                  flexGrow="1"
-                  colorScheme="blue"
-                  variant="outline"
-                  bgColor="white"
-                >
-                  الحجم المطلوب : {TranslateSize({ title: sizeRequisted.size })}
-                </Button>
-                <Button
-                  flexGrow="1"
-                  colorScheme="blue"
-                  variant="outline"
-                  bgColor="white"
-                >
-                  السعر : {sizeRequisted.price}
-                </Button>
-                <Button
-                  flexGrow="1"
-                  colorScheme="blue"
-                  variant="outline"
-                  bgColor="white"
-                >
-                  العدد : {sizeRequisted.quantity}
-                </Button>
-              </Flex>
-            </>
+                الحجم المطلوب : {TranslateSize({ title: sizeRequisted.size })}
+              </Button>
+              <Button
+                flexGrow="1"
+                colorScheme="blue"
+                variant="outline"
+                bgColor="white"
+              >
+                السعر : {sizeRequisted.price}
+              </Button>
+              <Button
+                flexGrow="1"
+                colorScheme="blue"
+                variant="outline"
+                bgColor="white"
+              >
+                العدد : {sizeRequisted.quantity}
+              </Button>
+            </Flex>
           );
         })}
       </Stack>

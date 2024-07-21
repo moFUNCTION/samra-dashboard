@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 // chakra componens =>{
 import {
   Tab,
-  Icon,
   AccordionIcon,
   Tabs,
   AccordionPanel,
@@ -13,6 +12,7 @@ import {
   AccordionButton,
   Accordion,
   Button,
+  Icon,
 } from "@chakra-ui/react";
 // }
 import { MdKeyboardArrowLeft } from "react-icons/md";
@@ -37,10 +37,11 @@ export const TabElement = ({ expand, title, href, icon, childLinks }) => {
 
           <Tabs as={AccordionPanel} {...styles.tabs}>
             {childLinks?.map((child, index) => {
+              const { href, title, Icon: ChildIcon } = child;
               return (
                 <Tab
                   as={Link}
-                  to={child.href}
+                  to={href}
                   key={index}
                   m="0"
                   w="100%"
@@ -60,8 +61,8 @@ export const TabElement = ({ expand, title, href, icon, childLinks }) => {
                 >
                   <MdKeyboardArrowLeft />
 
-                  {child.title}
-                  {child.icon}
+                  {title}
+                  <ChildIcon />
                 </Tab>
               );
             })}

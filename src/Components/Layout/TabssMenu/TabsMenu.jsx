@@ -1,19 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 // compoents =>{
 import { TabElement } from "./TabElement";
-import {
-  Box,
-  Button,
-  IconButton,
-  Stack,
-  Tabs,
-  useDisclosure,
-  useMediaQuery,
-} from "@chakra-ui/react";
+import { Box, IconButton, Stack, Tab, Tabs } from "@chakra-ui/react";
 // }
 // react router =>{
 import { useLocation } from "react-router-dom";
 // }
+import { SearchField, Title } from "../SearchField/SearchField";
+import { TabsValues } from "./TabsMenuValues";
+import { IoIosMenu } from "react-icons/io";
+import { RiUserSearchLine } from "react-icons/ri";
+import { TbDatabaseSearch } from "react-icons/tb";
 export const TabsMenu = () => {
   const TabsMenuRef = useRef();
   // pathname cahnging handler =>{
@@ -91,115 +88,78 @@ export const TabsMenu = () => {
           ref={TabsMenuRef}
         >
           {TabsValues.map((tab, index) => {
+            const { href, title, Icon, childsLinks } = tab;
             return (
               <TabElement
                 key={index}
-                href={tab.href}
-                title={tab.title}
-                icon={tab.icon}
+                href={href}
+                title={title}
+                icon={<Icon />}
                 expand={expand}
-                childLinks={tab.childsLinks}
+                childLinks={childsLinks}
               />
             );
           })}
+          <Stack w="100%" p="2">
+            <SearchField
+              BtnStyles={{
+                w: "100%",
+                colorScheme: "blue",
+                variant: "outline",
+                bgColor: "white",
+                justifyContent: expand ? "start" : "center",
+              }}
+              TooltipLabel="البحث عن منتج"
+              variant={expand ? "Bar" : "IconButton"}
+              Icon={<TbDatabaseSearch />}
+            >
+              <Title>البحث عن منتج</Title>
+            </SearchField>
+            <SearchField
+              BtnStyles={{
+                w: "100%",
+                colorScheme: "blue",
+                variant: "outline",
+                bgColor: "white",
+                justifyContent: expand ? "start" : "center",
+              }}
+              TooltipLabel="البحث عن صنف"
+              variant={expand ? "Bar" : "IconButton"}
+              Icon={<TbDatabaseSearch />}
+            >
+              <Title>البحث عن صنف</Title>
+            </SearchField>
+            <SearchField
+              BtnStyles={{
+                w: "100%",
+                colorScheme: "blue",
+                variant: "outline",
+                bgColor: "white",
+                justifyContent: expand ? "start" : "center",
+              }}
+              TooltipLabel="البحث عن مستخدم"
+              variant={expand ? "Bar" : "IconButton"}
+              Icon={<RiUserSearchLine />}
+            >
+              <Title>البحث عن مستخدم</Title>
+            </SearchField>
+            <SearchField
+              BtnStyles={{
+                w: "100%",
+                colorScheme: "blue",
+                variant: "outline",
+                bgColor: "white",
+                justifyContent: expand ? "start" : "center",
+              }}
+              TooltipLabel="البحث عن مشرف"
+              variant={expand ? "Bar" : "IconButton"}
+              Icon={<RiUserSearchLine />}
+            >
+              <Title>البحث عن مشرف</Title>
+            </SearchField>
+          </Stack>
         </Tabs>
       </Stack>
     </>
   );
 };
-import { IoIosMenu } from "react-icons/io";
-import { IoAnalyticsOutline } from "react-icons/io5";
-import { FaMoneyBillTrendUp, FaMotorcycle } from "react-icons/fa6";
-import { BiChat, BiFoodMenu, BiMoney } from "react-icons/bi";
-import { IoFastFoodSharp } from "react-icons/io5";
-import { FaBowlFood } from "react-icons/fa6";
-import { MdEmojiEvents, MdEventSeat, MdLocalShipping } from "react-icons/md";
-import { MdSportsMotorsports } from "react-icons/md";
-import { GrNotification, GrStatusGood } from "react-icons/gr";
-import { FaUsers } from "react-icons/fa";
-import { FaUsersCog } from "react-icons/fa";
-import { BiSolidFoodMenu } from "react-icons/bi";
-import { IoRestaurant } from "react-icons/io5";
-import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
-const TabsValues = [
-  {
-    title: "الاحصائيات",
-    icon: <IoAnalyticsOutline />,
-    href: "/analytics",
-    childsLinks: [
-      {
-        title: "الدخل",
-        icon: <FaMoneyBillTrendUp />,
-        href: "/outcome",
-      },
-    ],
-  },
-  {
-    title: "المنتجات",
-    icon: <BiFoodMenu />,
-    href: "/categories",
-    childsLinks: [
-      {
-        title: "الاصناف",
-        icon: <IoFastFoodSharp />,
-        href: "/categories",
-      },
-      {
-        title: "اضافة صنف",
-        icon: <IoFastFoodSharp />,
-        href: "/categories/add",
-      },
-    ],
-  },
-  {
-    title: "الطلبيات",
-    icon: <MdLocalShipping />,
-    childsLinks: [
-      {
-        title: "المعلقة",
-        icon: <MdSportsMotorsports />,
-        href: "/orders/pending",
-      },
-      {
-        title: "قيد التنفيذ",
-        icon: <FaMotorcycle />,
-        href: "/orders/progress",
-      },
-      {
-        title: "الناجحة",
-        icon: <GrStatusGood />,
-        href: "/orders/completed",
-      },
-      {
-        title: "الطلبيات الداخلية",
-        icon: <IoRestaurant />,
-      },
-    ],
-  },
-
-  {
-    title: "الاحداثيات",
-    icon: <MdEmojiEvents />,
-    href: "/events",
-  },
-  {
-    title: "الاشعارات",
-    icon: <GrNotification />,
-    href: "/notifications",
-  },
-  {
-    title: "المستخدمين",
-    icon: <FaUsers />,
-    href: "/users",
-  },
-  {
-    title: "المنيو",
-    icon: <BiSolidFoodMenu />,
-    href: "/menu",
-  },
-  {
-    title: "الماليات",
-    icon: <BiMoney />,
-    href: "/profit",
-  },
-];

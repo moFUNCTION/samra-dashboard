@@ -1,5 +1,5 @@
 import { Flex, Stack, useMediaQuery } from "@chakra-ui/react";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import { TabsMenu } from "../../Components/Layout/TabssMenu/TabsMenu";
 import { Header } from "../../Components/Layout/Header/Header";
@@ -9,7 +9,14 @@ import { MobileTabsNavigation } from "../../Components/Layout/MobileTabsNavigati
 
 export default function Index() {
   const [isPhoneQuery] = useMediaQuery("(max-width: 900px)");
-
+  const container = useRef();
+  const scrollTop = () => {
+    container.current.scrollTo({
+      top: 100,
+      left: 100,
+      behavior: "smooth",
+    });
+  };
   const { user, HandleRender } = UseUserData();
   if (user.loading) {
     return <CenteredCircularProgress />;
@@ -17,6 +24,7 @@ export default function Index() {
   if (!user.data) {
     return <Navigate to="/login" state={{ from: "/" }} />;
   }
+
   return (
     <Flex
       sx={{
@@ -41,9 +49,10 @@ export default function Index() {
             flexShrink: 0,
           },
         }}
+        ref={container}
       >
         <Header />
-        <Outlet />
+        <Outlet context={[scrollTop]} />
       </Stack>
     </Flex>
   );
